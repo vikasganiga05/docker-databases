@@ -1,0 +1,22 @@
+services:
+  mongo:
+    image: mongo:9
+    restart: always
+    container_name: mongo
+    volumes:
+      - mongo-data:/data/db/
+    ports:
+      - 27017:27017
+
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: chaiaurcode
+      MONGO_INITDB_ROOT_PASSWORD: chaiaurcode
+
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+volumes:
+  mongo-data:
